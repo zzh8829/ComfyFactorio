@@ -3,11 +3,11 @@ local Tabs = require 'comfy_panel.main'
 
 local map_info = {
     localised_category = false,
-    main_caption = nil,
+    main_caption = '山地保卫战',
     main_caption_color = {r = 0.6, g = 0.3, b = 0.99},
-    sub_caption = nil,
+    sub_caption = '0.8版本，2020.12.26',
     sub_caption_color = {r = 0.2, g = 0.9, b = 0.2},
-    text = nil
+    text = '本图难度较大。\n保护好火箭发射井！ \n\n请迅速开发矿区，建造产线，建立防线，抵御虫子进攻。  \n\n如果有余力可以到野外，找找有没有有用的东西。\n建议按以下配置进行游戏： \n虫巢密度400%，大小200%，进化时间因子调为三分之一，其他拉满，部队派出规模拉满，部队冷却时间拉到最小，污染扩散25%\n如果觉得太难，也可以适度下调。 \n\n地图特性：随机商店，载具内部空间，RPG系统，特殊地形，运气挖矿 .软重启前务必先回收载具！。 \n你可以在场景中找到这个地图!\n 地图制作人：itam QQ群号:701077913'
 }
 
 Global.register(

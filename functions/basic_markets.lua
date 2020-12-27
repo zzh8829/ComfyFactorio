@@ -131,6 +131,8 @@ market.vehicles = {
 	["artillery-wagon"] = {value = 8192, rarity = 8},
 	["car"] = {value = 80, rarity = 1},
 	["tank"] = {value = 1800, rarity = 5},
+	["spidertron"] = {value = 20000, rarity = 15},
+	["spidertron-remote"] = {value = 100, rarity = 3},
 }
 
 market.wire = {

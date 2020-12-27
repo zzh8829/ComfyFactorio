@@ -18,7 +18,7 @@ local de = defines.events
 local format = string.format
 
 local this = {
-    enabled = true,
+    enabled = false,
     landfill_history = {},
     capsule_history = {},
     friendly_fire_history = {},

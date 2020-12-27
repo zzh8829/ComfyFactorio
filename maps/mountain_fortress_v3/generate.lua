@@ -1,4 +1,5 @@
 local Market = require 'maps.mountain_fortress_v3.basic_markets'
+local WPT = require 'maps.mountain_fortress_v3.table'
 local Loot = require 'maps.mountain_fortress_v3.loot'
 local Task = require 'utils.task'
 local Token = require 'utils.token'
@@ -14,7 +15,14 @@ local queue_task = Task.queue_task
 local tiles_per_call = 8
 local total_calls = ceil(1024 / tiles_per_call)
 local regen_decoratives = false
-local force_chunk = false
+local wintery_type = {
+    ['simple-entity'] = true,
+    ['tree'] = true,
+    ['fish'] = true,
+    ['market'] = true,
+    ['locomotive'] = true,
+    ['cargo-wagon'] = true
+}
 
 -- Set to false by modules that want to control the on_chunk_generated event themselves.
 Public.enable_register_events = true
@@ -266,6 +274,44 @@ local function do_place_buildings(data)
     end
 end
 
+local function wintery(ent, extra_lights)
+    local winter_mode = WPT.get('winter_mode')
+    if not winter_mode then
+        return false
+    end
+    local colors = {{255, 0, 0}, {0, 255, 0}, {0, 0, 255}}
+    local function add_light(e)
+        local color = colors[math.random(1, 3)]
+        local scale = extra_lights or 1
+        rendering.draw_light(
+            {
+                sprite = 'utility/light_small',
+                orientation = 1,
+                scale = scale,
+                intensity = 1,
+                minimum_darkness = 0,
+                oriented = false,
+                color = color,
+                target = e,
+                target_offset = {0, -0.5},
+                surface = e.surface
+            }
+        )
+    end
+    if not (ent and ent.valid) then
+        return
+    end
+    if wintery_type[ent.type] then
+        if ent.type == 'simple-entity' then
+            if random(1, 8) ~= 1 then
+                return
+            end
+        end
+        add_light(ent)
+    end
+    return true
+end
+
 local function do_place_entities(data)
     local surface = data.surface
     local entity
@@ -274,6 +320,7 @@ local function do_place_entities(data)
         if e.collision then
             if surface.can_place_entity(e) then
                 entity = surface.create_entity(e)
+                wintery(entity)
                 if entity and e.direction then
                     entity.direction = e.direction
                 end
@@ -297,6 +344,7 @@ local function do_place_entities(data)
             end
         else
             entity = surface.create_entity(e)
+            wintery(entity)
             if entity and e.direction then
                 entity.direction = e.direction
             end
@@ -516,15 +564,20 @@ local do_chunk = Public.do_chunk
 local schedule_chunk = Public.schedule_chunk
 
 local function on_chunk(event)
+    local force_chunk = WPT.get('force_chunk')
     if force_chunk then
         do_chunk(event)
     elseif event.tick == 0 then
-        --do_chunk(event)
+        do_chunk(event)
     else
         schedule_chunk(event)
     end
+	Public.do_chunk()
+	map_gen_action(data)
 end
 
 Event.add(defines.events.on_chunk_generated, on_chunk)
+
+Public.wintery = wintery
 
 return Public

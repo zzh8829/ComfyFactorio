@@ -36,6 +36,7 @@ local bring_player_messages = {
 }
 
 local function bring_player(player, source_player)
+--game.print(source_player)
     if player.name == source_player.name then
         return player.print("You can't select yourself!", {r = 1, g = 0.5, b = 0.1})
     end

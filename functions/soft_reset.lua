@@ -56,7 +56,6 @@ function Public.soft_reset_map(old_surface, map_gen_settings, player_starting_it
         global.original_surface_name = old_surface.name
     end
     global.soft_reset_counter = global.soft_reset_counter + 1
-
     local new_surface =
         game.create_surface(
         global.original_surface_name .. '_' .. tostring(global.soft_reset_counter),
@@ -76,16 +75,16 @@ function Public.soft_reset_map(old_surface, map_gen_settings, player_starting_it
         message =
             table.concat(
             {
-                '>> The world has been reshaped, welcome to ',
+                '>> 世界已经重塑！欢迎来到',
                 global.original_surface_name,
-                ' number ',
+                ' 第 ',
                 tostring(global.soft_reset_counter),
-                '!'
+                '轮!'
             }
         )
     end
     game.print(message, {r = 0.98, g = 0.66, b = 0.22})
-    Server.to_discord_embed(message)
+ --   Server.to_discord_embed(message)
 
     return new_surface
 end

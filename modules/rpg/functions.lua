@@ -503,7 +503,7 @@ function Public.rpg_reset_player(player, one_time_reset)
         rpg_t[player.index] = {
             level = 1,
             xp = 0,
-            strength = 10,
+             strength = 10,
             magicka = 10,
             dexterity = 10,
             vitality = 10,

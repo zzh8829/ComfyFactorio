@@ -469,6 +469,7 @@ local buildings = {
 }
 
 local function spawn_random_buildings(entities, p, depth)
+    game.print(entities)
     local randomizer = random(1, #buildings)
     local low = random(1, 2)
     local medium = random(2, 3)

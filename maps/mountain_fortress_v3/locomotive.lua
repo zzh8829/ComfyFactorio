@@ -5,7 +5,6 @@ local ICFunctions = require 'maps.mountain_fortress_v3.ic.functions'
 local Session = require 'utils.datastore.session_data'
 local Difficulty = require 'modules.difficulty_vote_by_amount'
 local RPG = require 'modules.rpg.main'
-local Gui = require 'utils.gui'
 local Alert = require 'utils.alert'
 local Color = require 'utils.color_presets'
 local Modifiers = require 'utils.player_modifiers'
@@ -14,7 +13,6 @@ local Task = require 'utils.task_token'
 
 local zone_settings = Public.zone_settings
 
-local rpg_main_frame = RPG.main_frame_name
 local random = math.random
 local floor = math.floor
 local round = math.round
@@ -284,13 +282,6 @@ local function give_passive_xp(data)
                     rpg[player.index].xp_since_last_floaty_text = 0
                     rpg[player.index].last_floaty_text = game.tick + visuals_delay
                     RPG.set_last_spell_cast(player, player.position)
-                    if player.gui.screen[rpg_main_frame] then
-                        local f = player.gui.screen[rpg_main_frame]
-                        local d = Gui.get_data(f)
-                        if d and d.exp_gui and d.exp_gui.valid then
-                            d.exp_gui.caption = floor(rpg[player.index].xp)
-                        end
-                    end
                 else
                     rpg[player.index].inside_aura = false
                     Modifiers.update_single_modifier(player, 'character_crafting_speed_modifier', 'aura', 0)
